@@ -22,19 +22,19 @@ connectDB();
 
 const app = express();
 
-// 1. SAXITAN CORS: Oggolow Vercel oo kaliya si amniga loo ilaaliyo
+// 1. CORS POLICY (SAXITAN DHAMAYSTIRAN)
 app.use(cors({
-  origin: ["https://baafin.vercel.app", "http://localhost:5173"], // Ku dar localhost haddii aad tijaabinayso
-  credentials: true
+  origin: ["https://baafin.vercel.app", "http://localhost:5173"], 
+  credentials: true,
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // OPTIONS waa muhiim
+  allowedHeaders: ["Content-Type", "Authorization"] // U oggolow token-ka
 }));
 
 app.use(express.json());
 
-// __dirname fix for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// 2. SAXITAN UPLOADS: Hubi in folder-ka uploads uu jiro ama u isticmaal path sax ah
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use(express.static(path.join(__dirname, "public")));
 
@@ -49,12 +49,9 @@ app.use("/api/stats", statsRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/audit", auditRoutes);
 
-// 3. MUHIIM: Mongoose horay ayaad ugu xirtay connectDB(), qeybtan dambe ee mongoose.connect ka saar si aysan laba jeer isku xirin.
-
 app.get("/", (req, res) => {
     res.send("BAAFIN Platform API is running...");
 });
 
-// 4. PORT: Render wuxuu u baahan yahay inuu si dynamic ah u doorto Port-ka
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
