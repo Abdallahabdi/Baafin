@@ -104,35 +104,35 @@ export default function FoundItems() {
       <div className="p-6 min-h-screen bg-gradient-to-br from-green-50 to-green-100">
 
         {/* HEADER */}
-        <div className="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6">
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-green-900">Found Items</h1>
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto items-stretch sm:items-center">
+        <div className="mb-8">
+          <h1 className="text-3xl md:text-4xl font-bold text-green-900 mb-2">Found Items</h1>
+          <p className="text-muted-foreground">
+            Browse through reported found items. If you lost something, see if someone has found it and help reunite it with its owner.
+          </p>
+        </div>
+        {/* Filters */}
+        <div className="bg-white rounded-xl shadow-md p-4 mb-8 flex flex-col sm:flex-row gap-4 items-center justify-between">
+          <div className="flex-1 w-full relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground">🔍</span>
             <input
               value={searchQuery}
               onChange={e => setSearchQuery(e.target.value)}
               placeholder="Search found items..."
-              className="px-4 py-2 border rounded-lg w-full sm:w-64"
+              className="pl-10 pr-4 py-2 border rounded w-full"
             />
-            {foundItems.length > 0 && (
-              <img
-                src={(() => {
-                  const img = foundItems[0].image;
-                  if (!img) return '/placeholder.png';
-                  if (img.startsWith('http') || img.startsWith('/uploads/')) return img;
-                  return `/uploads/${img}`;
-                })()}
-                alt={foundItems[0].title || 'Found item'}
-                className="w-8 h-8 object-cover rounded-full border self-center"
-                onError={e => { e.target.onerror=null; e.target.src='/placeholder.png'; }}
-              />
-            )}
-            <button
-              onClick={() => { setEditItem(null); setShowModal(true); }}
-              className="flex items-center justify-center gap-2 bg-green-600 text-white px-4 py-2 rounded w-full sm:w-auto"
-            >
-              <FaPlus /> <span className="hidden sm:inline">Add Found</span>
-            </button>
           </div>
+          <button
+            onClick={() => { setEditItem(null); setShowModal(true); }}
+            className="flex items-center gap-2 bg-green-600 text-white px-4 py-2 rounded w-full sm:w-auto justify-center"
+          >
+            <FaPlus /> <span className="hidden sm:inline">Add Found</span>
+          </button>
+        </div>
+        {/* Results */}
+        <div className="flex items-center justify-between mb-6">
+          <p className="text-muted-foreground">
+            {filteredItems.length === 1 ? 'Showing 1 item' : `Showing ${filteredItems.length} items`}
+          </p>
         </div>
 
         {/* BACK BUTTON */}
