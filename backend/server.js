@@ -24,7 +24,11 @@ const app = express();
 
 // 1. CORS POLICY (SAXITAN DHAMAYSTIRAN)
 app.use(cors({
-  origin: ["https://baafin.vercel.app", "http://localhost:5173"], 
+  origin: [
+    "https://baafin.vercel.app",  // Production
+    "http://localhost:5173",       // Vite dev
+    "http://localhost:3001"        // React dev
+  ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // OPTIONS waa muhiim
   allowedHeaders: ["Content-Type", "Authorization"] // U oggolow token-ka
